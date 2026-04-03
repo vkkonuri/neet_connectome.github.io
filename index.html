@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>NEET Aspirants' Hub | Seven Hills Movement | CTK Ignition</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg-dark:#0a0c12; --bg-card:#141820; --bg-surface:#1e2530; --bg-surface2:#2a3340;
+  --accent-physics:#00d4ff; --accent-chemistry:#39ff14; --accent-biology:#ff6b6b;
+  --hill1:#ff4d4d; --hill2:#ff9f4a; --hill3:#ffeb3b; --hill4:#4caf50; --hill5:#2196f3; --hill6:#9c27b0; --hill7:#ff61d0;
+  --correct:#4ade80; --warning:#fbbf24; --text:#eef2ff; --text-muted:#8b9eb0; --border:#2a3548;
+  --shadow:0 8px 30px rgba(0,0,0,0.3); --r:12px; --r-lg:20px;
+}
+body{background:var(--bg-dark);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+/* Header */
+.header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;padding:24px 0 16px;border-bottom:1px solid var(--border);margin-bottom:32px}
+.logo h1{font-size:26px;font-weight:800;background:linear-gradient(135deg,var(--accent-physics),var(--accent-chemistry),var(--accent-biology));-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo p{font-size:12px;color:var(--text-muted);margin-top:4px}
+.header-buttons{display:flex;gap:12px;flex-wrap:wrap}
+.icon-btn{background:var(--bg-surface);border:1px solid var(--border);padding:8px 16px;border-radius:8px;color:var(--text-muted);cursor:pointer;font-size:12px;transition:all .2s}
+.icon-btn:hover{border-color:var(--warning);color:var(--warning)}
+/* Welcome & Seven Hills */
+.welcome-section{background:linear-gradient(135deg,rgba(0,212,255,.08),rgba(57,255,20,.05));border-radius:var(--r-lg);padding:32px;margin-bottom:40px;text-align:center}
+.welcome-section h2{font-size:1.8rem;margin-bottom:16px;color:var(--accent-physics)}
+.seven-hills{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin:32px 0}
+.hill-card{background:var(--bg-card);border-radius:var(--r);padding:24px;border-left:5px solid;transition:transform .2s}
+.hill-card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+.hill-number{font-size:2rem;font-weight:800;margin-bottom:8px}
+.hill-title{font-size:1.2rem;font-weight:700;margin-bottom:12px}
+.hill-desc{font-size:.85rem;color:var(--text-muted);line-height:1.5}
+/* Subject Grid */
+.subjects{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:48px}
+@media(max-width:700px){.subjects{grid-template-columns:1fr}}
+.subject-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;cursor:pointer;transition:all .3s}
+.subject-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.subject-card.physics{border-top:4px solid var(--accent-physics)}
+.subject-card.chemistry{border-top:4px solid var(--accent-chemistry)}
+.subject-card.biology{border-top:4px solid var(--accent-biology)}
+.subject-icon{font-size:42px;margin-bottom:12px}
+.subject-title{font-size:22px;font-weight:700}
+.subject-desc{font-size:13px;color:var(--text-muted);margin:8px 0}
+.subject-progress{background:var(--bg-surface);border-radius:8px;height:6px;overflow:hidden;margin:12px 0}
+.subject-progress-fill{height:100%;width:0%;transition:width .3s}
+.physics .subject-progress-fill{background:var(--accent-physics)}
+.chemistry .subject-progress-fill{background:var(--accent-chemistry)}
+.biology .subject-progress-fill{background:var(--accent-biology)}
+.subject-stats{display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted)}
+/* Content Area */
+.content-area{background:var(--bg-card);border-radius:var(--r-lg);border:1px solid var(--border);overflow:hidden;margin-bottom:40px;display:none}
+.content-header{padding:20px 28px;background:var(--bg-surface);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.back-btn{background:transparent;border:1px solid var(--border);padding:6px 14px;border-radius:8px;color:var(--text-muted);cursor:pointer}
+.tabs{display:flex;border-bottom:1px solid var(--border);background:var(--bg-card);flex-wrap:wrap}
+.tab{padding:14px 24px;background:transparent;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;font-weight:500}
+.tab.active{color:var(--text);border-bottom:2px solid var(--active-color,var(--accent-physics))}
+.tab-content{display:none;padding:24px 28px}
+.tab-content.active{display:block}
+.quiz-option{padding:12px 16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;cursor:pointer}
+.quiz-option:hover{background:var(--bg-surface2)}
+.quiz-option.correct{background:rgba(74,222,128,.1);border-color:var(--correct)}
+.quiz-option.wrong{background:rgba(255,92,92,.1);border-color:#ff5c5c}
+/* Problems & Voice Sections */
+.problems-section, .speak-section, .comments-section, .movement-section, .resources-section{background:var(--bg-card);border-radius:var(--r-lg);border:1px solid var(--border);margin-bottom:40px;overflow:hidden}
+.section-header{padding:20px 24px;background:var(--bg-surface);border-bottom:1px solid var(--border)}
+.section-header h2{font-size:1.5rem;color:var(--accent-physics)}
+.problems-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;padding:24px}
+.problem-card{background:rgba(248,113,113,.08);border-radius:var(--r);padding:20px;border-left:3px solid var(--warning)}
+.speak-form, .comment-form{padding:24px}
+.form-group{margin-bottom:20px}
+.form-group input, .form-group textarea, .form-group select{width:100%;padding:12px 16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:12px;color:var(--text)}
+.submit-btn{background:linear-gradient(135deg,var(--accent-physics),var(--accent-chemistry));border:none;padding:12px 28px;border-radius:40px;color:#000;font-weight:700;cursor:pointer}
+.comment-list{max-height:400px;overflow-y:auto;padding:0 24px}
+.comment-item{background:var(--bg-surface);border-radius:var(--r);padding:16px;margin-bottom:12px;border-left:3px solid var(--accent-physics)}
+/* Resource Library */
+.resources-section .resource-list{display:flex;flex-direction:column;gap:12px;padding:24px}
+.resource-item{background:var(--bg-surface);border-radius:12px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.resource-item a{color:var(--accent-physics);text-decoration:none;font-weight:500}
+.delete-resource{background:#dc2626;border:none;padding:4px 12px;border-radius:30px;color:white;cursor:pointer;font-size:12px}
+/* Admin Panel */
+.admin-panel{background:var(--bg-surface);border-radius:var(--r-lg);padding:24px;margin-bottom:40px;border:1px solid var(--warning);display:none}
+.admin-panel h3{color:var(--warning);margin-bottom:16px}
+.admin-tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.admin-tab{background:var(--bg-card);border:none;padding:10px 20px;border-radius:8px;color:var(--text-muted);cursor:pointer}
+.admin-tab.active{background:var(--warning);color:#000}
+.admin-tab-content{display:none}
+.admin-tab-content.active{display:block}
+.upload-group{margin-bottom:16px}
+.upload-group input, .upload-group textarea, .upload-group select{width:100%;padding:10px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;color:var(--text)}
+.upload-btn{background:var(--warning);border:none;padding:10px 24px;border-radius:8px;font-weight:600;cursor:pointer}
+.file-list{max-height:300px;overflow-y:auto;margin-top:16px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0}
+.stat-card{background:var(--bg-card);border-radius:var(--r);padding:16px;text-align:center}
+.stat-value{font-size:28px;font-weight:800;color:var(--accent-physics)}
+.stat-label{font-size:12px;color:var(--text-muted)}
+/* Footer */
+.footer{text-align:center;padding:32px;border-top:1px solid var(--border);color:var(--text-muted);font-size:12px}
+.counter{font-size:0.8rem;color:var(--accent-physics);margin-top:10px}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;z-index:2000;visibility:hidden;opacity:0;transition:.2s}
+.modal.active{visibility:visible;opacity:1}
+.modal-content{background:var(--bg-card);border-radius:var(--r-lg);padding:32px;max-width:500px;width:90%}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="logo"><h1>🏔️ NEET ASPIRANTS' HUB</h1><p>Seven Hills Movement | CTK Ignition | Connectomic Learning</p></div>
+    <div class="header-buttons">
+      <button class="icon-btn" id="contactBtn">📞 Contact</button>
+      <button class="icon-btn" id="feedbackBtn">💬 Feedback</button>
+      <button class="icon-btn" id="adminToggleBtn">🔐 Admin</button>
+    </div>
+  </div>
+
+  <!-- Welcome + Seven Hills -->
+  <div class="welcome-section">
+    <h2>🏔️ Scale the Seven Hills of Knowledge</h2>
+    <p>The Connectomic Theory of Knowledge (CTK) transforms scattered facts into an ordered neural highway. Master NEET by building connections, not memorizing isolated data.</p>
+    <div class="seven-hills" id="sevenHillsContainer"></div>
+  </div>
+
+  <!-- Subject Cards (NEET Ignition) -->
+  <div id="subjectGrid" class="subjects">
+    <div class="subject-card physics" data-subject="physics"><div class="subject-icon">⚛️</div><div class="subject-title">Physics</div><div class="subject-desc">Motion in a Plane · Vectors · Projectile · Circular Motion</div><div class="subject-progress"><div class="subject-progress-fill" id="physicsProgressFill"></div></div><div class="subject-stats"><span>📊 Accuracy</span><span id="physicsAccuracy">0%</span></div></div>
+    <div class="subject-card chemistry" data-subject="chemistry"><div class="subject-icon">🧪</div><div class="subject-title">Chemistry</div><div class="subject-desc">Structure of Atom · Quantum Numbers · Electronic Config</div><div class="subject-progress"><div class="subject-progress-fill" id="chemistryProgressFill"></div></div><div class="subject-stats"><span>📊 Accuracy</span><span id="chemistryAccuracy">0%</span></div></div>
+    <div class="subject-card biology" data-subject="biology"><div class="subject-icon">🔬</div><div class="subject-title">Biology</div><div class="subject-desc">Cell: Unit of Life · Organelles · Endomembrane System</div><div class="subject-progress"><div class="subject-progress-fill" id="biologyProgressFill"></div></div><div class="subject-stats"><span>📊 Accuracy</span><span id="biologyAccuracy">0%</span></div></div>
+  </div>
+
+  <!-- Content Area (for selected subject) -->
+  <div id="contentArea" class="content-area">
+    <div class="content-header"><div><h2 id="contentTitle"></h2><span id="subjectBadge"></span></div><button class="back-btn" id="backBtn">← Back to Dashboard</button></div>
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-tab="lecture">📖 Lecture</button>
+      <button class="tab" data-tab="quiz">🎯 Practice</button>
+      <button class="tab" data-tab="errors">⚠️ Error Atlas</button>
+      <button class="tab" data-tab="remedial">🪜 Remedial Ladder</button>
+      <button class="tab" data-tab="connectome">🔗 Connectome</button>
+    </div>
+    <div id="tabContents">
+      <div class="tab-content active" data-tab="lecture" id="lectureContent"></div>
+      <div class="tab-content" data-tab="quiz" id="quizContent"></div>
+      <div class="tab-content" data-tab="errors" id="errorsContent"></div>
+      <div class="tab-content" data-tab="remedial" id="remedialContent"></div>
+      <div class="tab-content" data-tab="connectome" id="connectomeContent"></div>
+    </div>
+  </div>
+
+  <!-- Academic Problems Section (from blog) -->
+  <div class="problems-section">
+    <div class="section-header"><h2>😓 The Real Problems NEET Aspirants Face</h2></div>
+    <div class="problems-grid">
+      <div class="problem-card"><h3>📖 Formula Forgetting</h3><p>"I study a formula today, but by the time the test comes, it's gone."</p></div>
+      <div class="problem-card"><h3>🔗 Siloed Subjects</h3><p>"Physics, Chemistry, Biology feel like three separate worlds."</p></div>
+      <div class="problem-card"><h3>🐢 Slow Calculations</h3><p>"I know the concept, but solving takes too long."</p></div>
+      <div class="problem-card"><h3>🧩 Fragmented Understanding</h3><p>"If questions mix topics, I'm lost."</p></div>
+      <div class="problem-card"><h3>📚 Information Overload</h3><p>"There's so much to study. I feel like I'm drowning."</p></div>
+      <div class="problem-card"><h3>😰 Test Anxiety</h3><p>"In the exam hall, my mind goes blank."</p></div>
+    </div>
+  </div>
+
+  <!-- Speak Your Mind (Before Exposure) -->
+  <div class="speak-section">
+    <div class="section-header"><h2>🎤 Speak Your Mind — Before You Experience the Seven Hills</h2></div>
+    <div class="speak-form">
+      <div class="form-group"><input type="text" id="nameInput" placeholder="Your Name (or NEET Aspirant)"></div>
+      <div class="form-group"><select id="stageSelect"><option value="Class XI">Class XI</option><option value="Class XII">Class XII</option><option value="Dropper">Dropper</option><option value="Coachings">Coaching Student</option><option value="Self-Study">Self-Study</option></select></div>
+      <div class="form-group"><textarea id="struggleInput" rows="3" placeholder="Your biggest struggle right now..."></textarea></div>
+      <div class="form-group"><textarea id="hopeInput" rows="2" placeholder="What would make learning easier for you?"></textarea></div>
+      <button class="submit-btn" onclick="submitBeforeExperience()">📢 Share My Voice</button>
+      <div id="beforeCounter" class="counter"></div>
+    </div>
+  </div>
+
+  <!-- Student Movement Section -->
+  <div class="movement-section">
+    <div class="section-header"><h2>🚩 The Student Movement for Knowledge</h2></div>
+    <div style="padding:20px 24px;text-align:center">
+      <p>We're tired of memorizing. It's time to learn differently — by <strong>building connections</strong>.</p>
+      <p style="margin:16px 0;"><strong>📢 #ConnectToUnderstand #SevenHillsMovement</strong></p>
+      <div class="movement-buttons" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button class="submit-btn" id="joinMovementBtn">✊ Join the Movement</button>
+        <button class="icon-btn" onclick="shareMovement()">📱 Invite Friends</button>
+        <button class="icon-btn" onclick="showSevenHillsAgain()">🏔️ Show Seven Hills</button>
+      </div>
+      <div id="movementCounter" class="counter" style="margin-top:16px"></div>
+      <div id="joinClickCounter" class="counter" style="margin-top:4px;font-size:0.7rem"></div>
+    </div>
+  </div>
+
+  <!-- Community Comments -->
+  <div class="comments-section">
+    <div class="section-header"><h3>💬 Voices of Aspirants</h3></div>
+    <div id="commentList" class="comment-list"></div>
+    <div class="comment-form" style="display:flex;gap:12px;padding:0 24px 24px;flex-wrap:wrap">
+      <input type="text" id="quickComment" placeholder="Share a quick thought..." style="flex:2;padding:10px;background:var(--bg-surface);border:1px solid var(--border);border-radius:12px">
+      <select id="quickStage" style="flex:1;padding:10px;background:var(--bg-surface);border:1px solid var(--border);border-radius:12px"><option>Aspirant</option><option>XI</option><option>XII</option><option>Dropper</option></select>
+      <button class="submit-btn" onclick="addQuickComment()">Post</button>
+    </div>
+  </div>
+
+  <!-- After Exposure Section -->
+  <div class="speak-section">
+    <div class="section-header"><h2>🔄 Come Back After You Experience the Seven Hills</h2></div>
+    <div class="speak-form">
+      <div class="form-group"><input type="text" id="afterNameInput" placeholder="Your Name"></div>
+      <div class="form-group"><textarea id="afterChangeInput" rows="3" placeholder="What changed after the Seven Hills? Which hill made the biggest difference?"></textarea></div>
+      <button class="submit-btn" onclick="submitAfterExperience()">🌟 Share My Transformation</button>
+      <div id="afterCounter" class="counter"></div>
+    </div>
+  </div>
+
+  <!-- Resource Library (admin added files appear here) -->
+  <div class="resources-section" id="resourcesSection">
+    <div class="section-header"><h2>📚 Additional Learning Resources</h2></div>
+    <div id="resourceListPublic" class="resource-list"></div>
+  </div>
+
+  <!-- Admin Panel (password protected) -->
+  <div id="adminPanel" class="admin-panel">
+    <h3>🛠️ Admin Dashboard – Upload Resources & View Analytics</h3>
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-admin-tab="files">📄 Add Resource</button>
+      <button class="admin-tab" data-admin-tab="manage">⚙️ Manage Resources</button>
+      <button class="admin-tab" data-admin-tab="analytics">📊 Analytics</button>
+    </div>
+    <div id="adminFiles" class="admin-tab-content active">
+      <div class="upload-group"><label>Title</label><input type="text" id="resourceTitle" placeholder="e.g., Projectile Motion PDF"></div>
+      <div class="upload-group"><label>URL (link to PDF, video, HTML page)</label><input type="url" id="resourceUrl" placeholder="https://..."></div>
+      <div class="upload-group"><label>Or upload file (image, PDF, video)</label><input type="file" id="fileUploadInput" accept="image/*,video/*,application/pdf"></div>
+      <div class="upload-group"><label>Description (optional)</label><textarea id="resourceDesc" rows="2"></textarea></div>
+      <button class="upload-btn" id="uploadResourceBtn">➕ Add Resource</button>
+      <div id="adminResourceList" class="file-list"></div>
+    </div>
+    <div id="adminManage" class="admin-tab-content">
+      <p>Delete resources:</p>
+      <div id="manageResourcesList" class="file-list"></div>
+      <button class="upload-btn" id="clearAllDataBtn" style="background:#ff5c5c;margin-top:12px;">⚠️ Reset All Data (Progress + Resources + Counters)</button>
+      <button class="upload-btn" id="changeAdminPwdBtn" style="margin-top:12px;">🔑 Change Admin Password</button>
+    </div>
+    <div id="adminAnalytics" class="admin-tab-content">
+      <h4>Click Counters & Engagement</h4>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-value" id="statPageViews">0</div><div class="stat-label">Page Views</div></div>
+        <div class="stat-card"><div class="stat-value" id="statJoinClicks">0</div><div class="stat-label">Join Movement Clicks</div></div>
+        <div class="stat-card"><div class="stat-value" id="statResourceClicks">0</div><div class="stat-label">Total Resource Clicks</div></div>
+        <div class="stat-card"><div class="stat-value" id="statSubjectClicks">0</div><div class="stat-label">Subject Card Clicks</div></div>
+      </div>
+      <div id="resourceClickStats" style="margin-top:16px;max-height:200px;overflow-y:auto"></div>
+      <button class="upload-btn" id="resetCountersBtn" style="background:#6c757d;margin-top:12px;">↻ Reset All Counters</button>
+    </div>
+  </div>
+
+  <div class="footer"><p>🏔️ Seven Hills Movement | CTK Ignition | Powered by Connectomic Theory of Knowledge</p><p>© NEET Aspirants' Collective</p></div>
+</div>
+
+<div id="modal" class="modal"><div class="modal-content"><h3 id="modalTitle">Contact</h3><textarea id="modalInput" rows="3" placeholder="Your message..."></textarea><button id="modalSubmitBtn" style="margin-top:12px">Send</button><button id="modalCloseBtn" style="margin-left:12px">Close</button></div></div>
+
+<script>
+// ==================== CLICK COUNTERS ====================
+let counters = JSON.parse(localStorage.getItem('ctk_counters') || '{"pageViews":0,"joinClicks":0,"resourceClicks":0,"subjectClicks":0,"resourceDetails":{}}');
+function incrementCounter(name) {
+  counters[name] = (counters[name] || 0) + 1;
+  localStorage.setItem('ctk_counters', JSON.stringify(counters));
+  updateStatsDisplay();
+}
+function incrementResourceClick(resourceId) {
+  counters.resourceClicks = (counters.resourceClicks || 0) + 1;
+  if(!counters.resourceDetails) counters.resourceDetails = {};
+  counters.resourceDetails[resourceId] = (counters.resourceDetails[resourceId] || 0) + 1;
+  localStorage.setItem('ctk_counters', JSON.stringify(counters));
+  updateStatsDisplay();
+}
+function updateStatsDisplay() {
+  document.getElementById('statPageViews').innerText = counters.pageViews || 0;
+  document.getElementById('statJoinClicks').innerText = counters.joinClicks || 0;
+  document.getElementById('statResourceClicks').innerText = counters.resourceClicks || 0;
+  document.getElementById('statSubjectClicks').innerText = counters.subjectClicks || 0;
+  let detailsHtml = '<strong>Per‑Resource Clicks:</strong><div class="file-list">';
+  if(counters.resourceDetails) {
+    for(let [id, count] of Object.entries(counters.resourceDetails)) {
+      detailsHtml += `<div>📌 ${id}: ${count} click(s)</div>`;
+    }
+  }
+  detailsHtml += '</div>';
+  document.getElementById('resourceClickStats').innerHTML = detailsHtml;
+  document.getElementById('joinClickCounter').innerHTML = `🔁 Join button clicked: ${counters.joinClicks || 0} times`;
+}
+
+// Page view counter
+incrementCounter('pageViews');
+
+// Subject card click tracking
+document.querySelectorAll('.subject-card').forEach(card => {
+  card.addEventListener('click', () => {
+    incrementCounter('subjectClicks');
+    document.getElementById("subjectGrid").style.display = "none";
+    document.getElementById("contentArea").style.display = "block";
+    renderSubjectContent(card.dataset.subject);
+  });
+});
+
+// Join movement button with separate click counter
+document.getElementById('joinMovementBtn').addEventListener('click', () => {
+  incrementCounter('joinClicks');
+  joinMovement(); // existing function
+});
+
+// ==================== SEVEN HILLS DATA ====================
+const hills = [
+  {num:"I",title:"From Known to Unknown",color:"#ff4d4d",desc:"Anchor every new concept to something you already know."},
+  {num:"II",title:"Identify the Central Point",color:"#ff9f4a",desc:"Every topic has ONE core idea. Master it, and everything falls into place."},
+  {num:"III",title:"Let the Student Discover",color:"#ffeb3b",desc:"Guided questions lead to self-discovery."},
+  {num:"IV",title:"One Key, Many Doors",color:"#4caf50",desc:"The same formula appears across topics."},
+  {num:"V",title:"Recognise Patterns",color:"#2196f3",desc:"See the pattern behind the problem."},
+  {num:"VI",title:"Build Connections",color:"#9c27b0",desc:"Integrate across chapters and subjects."},
+  {num:"VII",title:"Real-World Wisdom",color:"#ff61d0",desc:"From knowledge to wisdom. Every concept serves a purpose."}
+];
+function renderHills() {
+  document.getElementById("sevenHillsContainer").innerHTML = hills.map(h => `<div class="hill-card" style="border-left-color:${h.color}"><div class="hill-number" style="color:${h.color}">Hill ${h.num}</div><div class="hill-title">${h.title}</div><div class="hill-desc">${h.desc}</div></div>`).join('');
+}
+renderHills();
+
+// ==================== SUBJECT DATA (from NEET Ignition) ====================
+const subjectsData = {
+  physics: { name: "Physics", color: "#00d4ff", accentClass: "physics", 
+    lecture: `<h3>Motion in a Plane — 2D Kinematics</h3><p>The key insight: <strong>horizontal and vertical motions are completely independent</strong>.</p><div class="highlight" style="background:rgba(0,212,255,.1);padding:12px;border-radius:12px;margin:16px 0"><strong>⭐ Independence Principle</strong><br>x: constant velocity · y: constant acceleration g = 9.8 m/s²</div>
+    <h3>Vectors — Component Method</h3><p>Magnitude: |R| = √(R<sub>x</sub>² + R<sub>y</sub>²). Direction: tanθ = R<sub>y</sub>/R<sub>x</sub>.</p>
+    <h3>Projectile Motion</h3><p>Time of flight: T = 2u sinθ/g · Max height: H = u² sin²θ/2g · Range: R = u² sin2θ/g</p>`,
+    questions: [
+      { text: "A projectile is launched at 30° with speed 20 m/s. What is the initial vertical velocity component? (sin30°=0.5)", options: ["10 m/s", "17.3 m/s", "20 m/s", "5 m/s"], correct: 0, explanation: "u<sub>y</sub> = u sinθ = 20 × 0.5 = 10 m/s", concept: "Projectile Components" },
+      { text: "At the highest point of a projectile's trajectory, the velocity is:", options: ["Zero", "Purely horizontal", "Purely vertical", "Equal to initial velocity"], correct: 1, explanation: "Vertical velocity becomes zero; horizontal remains u cosθ", concept: "Projectile Motion" },
+      { text: "A vector has components (40, 30). Its magnitude is:", options: ["70", "10", "50", "√(40²+30²)"], correct: 2, explanation: "√(1600+900)=√2500=50", concept: "Vector Magnitude" }
+    ] },
+  chemistry: { name: "Chemistry", color: "#39ff14", accentClass: "chemistry",
+    lecture: `<h3>Structure of Atom — Quantum Revolution</h3><div style="background:rgba(57,255,20,.1);padding:12px;border-radius:12px;margin:16px 0"><strong>⭐ Bohr's Model</strong><br>Eₙ = −13.6 Z²/n² eV · rₙ = 52.9 n²/Z pm</div>
+    <h3>Quantum Numbers — Electron's Address</h3><p>n (principal): shell · l (azimuthal): shape — s(l=0), p(l=1), d(l=2), f(l=3)<br>mₗ (magnetic): orientation · mₛ (spin): +½ or −½</p>
+    <h3>Electronic Configuration Rules</h3><p>Aufbau, Pauli Exclusion, Hund's Rule. Exceptions: Cr: [Ar] 3d⁵ 4s¹, Cu: [Ar] 3d¹⁰ 4s¹</p>`,
+    questions: [
+      { text: "The energy of an electron in the 2nd orbit of hydrogen atom is:", options: ["-13.6 eV", "-3.4 eV", "-1.51 eV", "-0.85 eV"], correct: 1, explanation: "E₂ = -13.6/4 = -3.4 eV", concept: "Bohr Energy" },
+      { text: "Which set of quantum numbers is NOT valid?", options: ["n=3, l=2", "n=4, l=0", "n=2, l=2", "n=3, l=1"], correct: 2, explanation: "l must be 0 to n-1. For n=2, l can be 0 or 1", concept: "Quantum Numbers" },
+      { text: "The ground state electronic configuration of chromium (Z=24) is:", options: ["[Ar] 3d⁴ 4s²", "[Ar] 3d⁵ 4s¹", "[Ar] 3d⁶ 4s⁰", "[Ar] 3d³ 4s²"], correct: 1, explanation: "Half-filled stability: [Ar] 3d⁵ 4s¹", concept: "Electronic Configuration" }
+    ] },
+  biology: { name: "Biology", color: "#ff6b6b", accentClass: "biology",
+    lecture: `<h3>Cell: The Unit of Life</h3><div style="background:rgba(255,107,107,.1);padding:12px;border-radius:12px;margin:16px 0"><strong>⭐ Cell Theory</strong><br>Schleiden & Schwann: all living things composed of cells. Virchow: omnis cellula e cellula</div>
+    <h3>Prokaryote vs Eukaryote</h3><p>Prokaryotes: no nucleus, 70S ribosomes, circular DNA. Mycoplasma: smallest cell, no cell wall.<br>Eukaryotes: true nucleus, 80S ribosomes, membrane-bound organelles.</p>
+    <h3>Endomembrane System</h3><p>ER, Golgi, Lysosomes, Vacuoles. RER: protein synthesis. SER: lipid synthesis. Golgi: modifies, sorts.</p>`,
+    questions: [
+      { text: "Which organism is the smallest cell capable of independent existence?", options: ["Virus", "Bacteria", "Mycoplasma", "Amoeba"], correct: 2, explanation: "Mycoplasma (PPLO) is the smallest cell (~0.1-0.3 µm)", concept: "Prokaryotes" },
+      { text: "Ribosomes of mitochondria are:", options: ["80S", "70S", "60S", "90S"], correct: 1, explanation: "Mitochondria have 70S ribosomes", concept: "Semi-autonomous Organelles" },
+      { text: "Which is NOT part of the endomembrane system?", options: ["Golgi apparatus", "Lysosome", "Mitochondrion", "Vacuole"], correct: 2, explanation: "Mitochondria are excluded from endomembrane system", concept: "Endomembrane System" }
+    ] }
+};
+
+// Progress storage
+let progress = JSON.parse(localStorage.getItem("neetIgnitionProgress")) || { physics:{correct:0,attempted:0,answers:{},errors:{}}, chemistry:{correct:0,attempted:0,answers:{},errors:{}}, biology:{correct:0,attempted:0,answers:{},errors:{}} };
+function updateStats() {
+  for(let sub of ["physics","chemistry","biology"]) {
+    let p = progress[sub];
+    let acc = p.attempted ? Math.round((p.correct/p.attempted)*100) : 0;
+    document.getElementById(`${sub}Accuracy`).innerText = acc+"%";
+    let fill = p.attempted ? (p.correct / subjectsData[sub].questions.length)*100 : 0;
+    let fillEl = document.getElementById(`${sub}ProgressFill`);
+    if(fillEl) fillEl.style.width = fill+"%";
+  }
+}
+function recordAnswer(subject, qIdx, isCorrect, concept) {
+  let p = progress[subject];
+  if(p.answers[qIdx] !== undefined) return;
+  p.answers[qIdx] = isCorrect;
+  p.attempted++;
+  if(isCorrect) p.correct++;
+  else p.errors[concept] = (p.errors[concept]||0)+1;
+  localStorage.setItem("neetIgnitionProgress", JSON.stringify(progress));
+  updateStats();
+  renderSubjectContent(subject);
+}
+window.selectAnswer = function(subject, qIdx, optIdx) {
+  let p = progress[subject];
+  if(p.answers[qIdx] !== undefined) return;
+  let q = subjectsData[subject].questions[qIdx];
+  let isCorrect = (optIdx === q.correct);
+  recordAnswer(subject, qIdx, isCorrect, q.concept);
+  renderQuizQuestions(subject);
+  showToast(isCorrect ? "✓ Correct! " + q.explanation : "✗ Incorrect. " + q.explanation);
+};
+function renderQuizQuestions(subject) {
+  let data = subjectsData[subject];
+  let container = document.getElementById("quizContent");
+  if(!container) return;
+  let html = '<div id="quizQuestions"></div>';
+  container.innerHTML = html;
+  let qContainer = document.getElementById("quizQuestions");
+  data.questions.forEach((q,idx)=>{
+    let answered = progress[subject].answers[idx] !== undefined;
+    let isCorrect = progress[subject].answers[idx];
+    html = `<div class="quiz-option" style="margin-bottom:12px;padding:12px;background:var(--bg-surface);border-radius:8px"><strong>${idx+1}. ${q.text}</strong><div style="margin-top:8px">`;
+    q.options.forEach((opt,optIdx)=>{
+      let cls = '';
+      if(answered) cls = (optIdx===q.correct) ? 'correct' : (optIdx===progress[subject].answers[idx] && !isCorrect ? 'wrong' : '');
+      html += `<div class="quiz-option ${cls}" onclick="if(!${answered}) selectAnswer('${subject}',${idx},${optIdx})"><span>${String.fromCharCode(65+optIdx)}. ${opt}</span></div>`;
+    });
+    html += `</div>${answered ? `<div style="margin-top:8px;padding:8px;background:rgba(0,0,0,.2);border-radius:6px"><strong>${isCorrect?'✓ Correct':'✗ Incorrect'}</strong><br>${q.explanation}</div>` : ''}</div>`;
+    qContainer.innerHTML += html;
+  });
+}
+function renderSubjectContent(subject) {
+  let data = subjectsData[subject];
+  document.getElementById("contentTitle").innerHTML = data.name;
+  document.getElementById("subjectBadge").innerHTML = data.name;
+  document.getElementById("lectureContent").innerHTML = data.lecture;
+  renderQuizQuestions(subject);
+  let errors = progress[subject].errors;
+  let errHtml = Object.keys(errors).length ? Object.entries(errors).map(([c,cnt])=>`<div>⚠️ ${c}: ${cnt} error(s)</div>`).join('') : '<p>✨ No errors yet!</p>';
+  document.getElementById("errorsContent").innerHTML = errHtml;
+  let topErr = Object.keys(errors)[0];
+  let remHtml = topErr ? `<div>📘 Review ${topErr} concept and examples.</div>` : '<p>🌟 No weak spots.</p>';
+  document.getElementById("remedialContent").innerHTML = remHtml;
+  let resourcesHtml = uploadedResources.filter(r=>r.subject===subject || r.subject==="all").map(r=>`<div class="resource-item"><a href="${r.url}" target="_blank" data-resource-id="${r.id}" onclick="incrementResourceClick('${r.id}')">📎 ${r.type}: ${r.title}</a></div>`).join('');
+  document.getElementById("connectomeContent").innerHTML = `<div><strong>🔗 CTK Connectome: ${data.name}</strong><p>Connects to: ${subject==='physics'?'Laws of Motion, Work Energy':subject==='chemistry'?'Periodic Table, Bonding':'Cell Division, Genetics'}</p>${resourcesHtml}</div>`;
+}
+
+document.getElementById("backBtn").addEventListener("click",()=>{
+  document.getElementById("subjectGrid").style.display = "grid";
+  document.getElementById("contentArea").style.display = "none";
+});
+document.querySelectorAll(".tab").forEach(tab=>{
+  tab.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+    tab.classList.add("active");
+    document.querySelectorAll(".tab-content").forEach(tc=>tc.classList.remove("active"));
+    document.querySelector(`.tab-content[data-tab="${tab.dataset.tab}"]`).classList.add("active");
+  });
+});
+
+// ==================== BLOG FEATURES ====================
+let beforeExperiences = JSON.parse(localStorage.getItem('ctk_before_experiences') || '[]');
+let afterExperiences = JSON.parse(localStorage.getItem('ctk_after_experiences') || '[]');
+let movementCount = parseInt(localStorage.getItem('ctk_movement_count') || '0');
+let quickComments = JSON.parse(localStorage.getItem('ctk_quick_comments') || '[]');
+function updateBlogCounters() {
+  document.getElementById('beforeCounter').innerHTML = `📢 ${beforeExperiences.length} aspirants shared their voice`;
+  document.getElementById('afterCounter').innerHTML = `🌟 ${afterExperiences.length} transformations shared`;
+  document.getElementById('movementCounter').innerHTML = `✊ ${movementCount} students joined the movement`;
+}
+function renderComments() {
+  const container = document.getElementById('commentList');
+  container.innerHTML = quickComments.slice().reverse().map(c => `<div class="comment-item"><div class="comment-name">${escapeHtml(c.name)} (${c.stage})</div><div class="comment-text">${escapeHtml(c.text)}</div><div class="comment-stage">📅 ${new Date(c.timestamp).toLocaleDateString()}</div></div>`).join('');
+  if(!container.innerHTML) container.innerHTML = '<p style="color:var(--text-muted);text-align:center">Be the first to share!</p>';
+}
+function submitBeforeExperience() {
+  let name = document.getElementById('nameInput').value.trim();
+  let stage = document.getElementById('stageSelect').value;
+  let struggle = document.getElementById('struggleInput').value.trim();
+  let hope = document.getElementById('hopeInput').value.trim();
+  if(!name || (!struggle && !hope)) { showToast("Please share your name and at least one struggle."); return; }
+  beforeExperiences.push({name,stage,struggle,hopes:hope,timestamp:new Date().toISOString()});
+  localStorage.setItem('ctk_before_experiences',JSON.stringify(beforeExperiences));
+  quickComments.push({name,stage,text:struggle.substring(0,150),timestamp:new Date().toISOString()});
+  localStorage.setItem('ctk_quick_comments',JSON.stringify(quickComments));
+  document.getElementById('nameInput').value=''; document.getElementById('struggleInput').value=''; document.getElementById('hopeInput').value='';
+  updateBlogCounters(); renderComments(); showToast("Voice shared!");
+}
+function submitAfterExperience() {
+  let name = document.getElementById('afterNameInput').value.trim();
+  let change = document.getElementById('afterChangeInput').value.trim();
+  if(!name || !change) { showToast("Please share your name and transformation."); return; }
+  afterExperiences.push({name,change,timestamp:new Date().toISOString()});
+  localStorage.setItem('ctk_after_experiences',JSON.stringify(afterExperiences));
+  document.getElementById('afterNameInput').value=''; document.getElementById('afterChangeInput').value='';
+  updateBlogCounters(); showToast("Transformation saved!");
+}
+function joinMovement() { movementCount++; localStorage.setItem('ctk_movement_count',movementCount); updateBlogCounters(); showToast("You joined the movement!"); }
+function shareMovement() { window.open(`https://wa.me/?text=${encodeURIComponent("I joined the #SevenHillsMovement for NEET! "+window.location.href)}`,'_blank'); }
+function showSevenHillsAgain() { document.querySelector('.welcome-section').scrollIntoView({behavior:'smooth'}); }
+function addQuickComment() {
+  let text = document.getElementById('quickComment').value.trim();
+  let stage = document.getElementById('quickStage').value;
+  if(!text) return;
+  quickComments.push({name:'Anonymous',stage,text,timestamp:new Date().toISOString()});
+  localStorage.setItem('ctk_quick_comments',JSON.stringify(quickComments));
+  document.getElementById('quickComment').value='';
+  renderComments(); updateBlogCounters(); showToast("Comment added");
+}
+
+// ==================== RESOURCE MANAGEMENT ====================
+let uploadedResources = JSON.parse(localStorage.getItem('ctkResources')) || [];
+let adminMode = false;
+function renderResources() {
+  let publicHtml = uploadedResources.map((r,i)=>`<div class="resource-item"><a href="${escapeHtml(r.url)}" target="_blank" data-resource-id="${r.id}" onclick="incrementResourceClick('${r.id}')">📎 ${escapeHtml(r.title)}</a> <span style="color:var(--text-muted)">${r.desc || ''}</span></div>`).join('');
+  document.getElementById('resourceListPublic').innerHTML = publicHtml || '<p>No resources yet. Admin can add PDFs, videos, or links.</p>';
+  let adminHtml = uploadedResources.map((r,i)=>`<div class="file-list-item"><a href="${escapeHtml(r.url)}" target="_blank">📌 ${escapeHtml(r.title)}</a><button class="delete-resource" onclick="deleteResource(${i})">Delete</button></div>`).join('');
+  document.getElementById('adminResourceList').innerHTML = adminHtml || 'No resources.';
+  document.getElementById('manageResourcesList').innerHTML = adminHtml;
+}
+window.deleteResource = function(idx) { uploadedResources.splice(idx,1); localStorage.setItem('ctkResources',JSON.stringify(uploadedResources)); renderResources(); showToast("Resource deleted"); };
+document.getElementById('uploadResourceBtn').addEventListener('click',()=>{
+  let title = document.getElementById('resourceTitle').value.trim();
+  let url = document.getElementById('resourceUrl').value.trim();
+  let desc = document.getElementById('resourceDesc').value.trim();
+  let file = document.getElementById('fileUploadInput').files[0];
+  let finalUrl = url;
+  if(file) { finalUrl = URL.createObjectURL(file); }
+  if(!title || !finalUrl) { showToast("Please provide title and URL/file."); return; }
+  let id = 'res_' + Date.now() + '_' + Math.random().toString(36).substr(2,6);
+  uploadedResources.push({ id, title, url: finalUrl, desc, type: file ? file.type : 'link', subject: 'all', added: new Date().toISOString() });
+  localStorage.setItem('ctkResources',JSON.stringify(uploadedResources));
+  renderResources();
+  document.getElementById('resourceTitle').value=''; document.getElementById('resourceUrl').value=''; document.getElementById('resourceDesc').value=''; document.getElementById('fileUploadInput').value='';
+  showToast("Resource added!");
+});
+document.getElementById('clearAllDataBtn').addEventListener('click',()=>{ if(confirm("Delete all data (progress, blog posts, resources, counters)?")){ localStorage.clear(); location.reload(); } });
+document.getElementById('resetCountersBtn').addEventListener('click',()=>{ if(confirm("Reset all click counters?")){ counters = {pageViews:0,joinClicks:0,resourceClicks:0,subjectClicks:0,resourceDetails:{}}; localStorage.setItem('ctk_counters',JSON.stringify(counters)); updateStatsDisplay(); showToast("Counters reset."); } });
+
+// Admin password
+function getAdminPassword() { return localStorage.getItem('ctk_admin_password'); }
+function setAdminPassword(pwd) { localStorage.setItem('ctk_admin_password', pwd); }
+function promptSetNewPassword() { let p = prompt("Set admin password:"); if(p && p.trim()){ setAdminPassword(p.trim()); showToast("Password saved."); return true; } return false; }
+function changeAdminPassword() { if(!adminMode){ showToast("Enable admin first."); return; } let old = prompt("Current password:"); if(old===getAdminPassword()){ let newPwd = prompt("New password:"); if(newPwd && newPwd.trim()) setAdminPassword(newPwd.trim()); showToast("Password changed."); } else showToast("Wrong password."); }
+document.getElementById('changeAdminPwdBtn').addEventListener('click',changeAdminPassword);
+document.getElementById('adminToggleBtn').addEventListener('click',()=>{
+  let stored = getAdminPassword();
+  if(!stored) { if(!promptSetNewPassword()) return; stored = getAdminPassword(); }
+  let entered = prompt("Enter admin password:");
+  if(entered === stored) { adminMode = true; document.getElementById('adminPanel').style.display = 'block'; showToast("Admin mode ON"); }
+  else showToast("Wrong password.");
+});
+document.querySelectorAll('.admin-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelectorAll('.admin-tab-content').forEach(c=>c.classList.remove('active'));
+    document.getElementById(`admin${tab.dataset.adminTab.charAt(0).toUpperCase()+tab.dataset.adminTab.slice(1)}`).classList.add('active');
+  });
+});
+
+// Helper functions
+function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m=> m==='&'?'&amp;': m==='<'?'&lt;':'&gt;'); }
+function showToast(msg) { let modal=document.getElementById('modal'); let msgDiv=document.getElementById('modalTitle'); msgDiv.innerText="Notification"; document.getElementById('modalInput').style.display='none'; document.getElementById('modalSubmitBtn').style.display='none'; let p=document.createElement('p'); p.innerText=msg; document.querySelector('#modal .modal-content').appendChild(p); modal.classList.add('active'); setTimeout(()=>{ modal.classList.remove('active'); p.remove(); document.getElementById('modalInput').style.display='block'; document.getElementById('modalSubmitBtn').style.display='inline-block'; },2000); }
+document.getElementById('modalCloseBtn').addEventListener('click',()=>document.getElementById('modal').classList.remove('active'));
+document.getElementById('modalSubmitBtn').addEventListener('click',()=>{ let msg=document.getElementById('modalInput').value; if(msg){ alert("Thank you! We'll respond soon."); document.getElementById('modal').classList.remove('active'); document.getElementById('modalInput').value=''; } else alert("Please enter a message."); });
+document.getElementById('contactBtn').addEventListener('click',()=>{ document.getElementById('modalTitle').innerText="Contact Prof. Konuri"; document.getElementById('modalInput').style.display='block'; document.getElementById('modalSubmitBtn').style.display='inline-block'; document.getElementById('modal').classList.add('active'); });
+document.getElementById('feedbackBtn').addEventListener('click',()=>{ document.getElementById('modalTitle').innerText="Feedback / Suggestions"; document.getElementById('modalInput').style.display='block'; document.getElementById('modalSubmitBtn').style.display='inline-block'; document.getElementById('modal').classList.add('active'); });
+
+// Initial loads
+updateStats(); updateBlogCounters(); renderComments(); renderResources(); updateStatsDisplay();
+</script>
+</body>
+</html>
